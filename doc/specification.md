@@ -51,8 +51,8 @@ rounded away.
 ### Form
 
 ```jsonc
-{ "op": "math.add", "of": [<expression:Number>, ...] }
-{ "op": "math.mul", "of": [<expression:Number>, ...] }
+{ "op": "math.add", "of": [<expression:Number>, …] }
+{ "op": "math.mul", "of": [<expression:Number>, …] }
 ```
 
 ### How it evaluates
@@ -120,7 +120,7 @@ corrects for it.
 ### Form
 
 ```jsonc
-{ "op": "math.min", "of": [<expression:Number>, ...] }
+{ "op": "math.min", "of": [<expression:Number>, …] }
 ```
 
 ### How it evaluates
@@ -169,8 +169,8 @@ There is no implicit conversion from `Text` either: `"1" + 1` is a fault.
 
 - **No `math.floor` / `math.ceil` / `math.round`.** This was expected to be needed soon —
   `math.div` gives real division, so there is no way to land on an integer, and rules doing
-  coordinate arithmetic looked like they would want one. Five rule sets later, including
-  three board games, none has. The reason is that the questions that looked like they
+  coordinate arithmetic looked like they would want one. Every rule set written since, the
+  board games included, has done without. The reason is that the questions that looked like they
   needed division turned out to be reachable another way: chess measures distance to the
   edge with `seq.count` over a `grid.ray` rather than by dividing coordinates. When one is
   finally needed, the rounding mode has to be decided with it, and this is where that

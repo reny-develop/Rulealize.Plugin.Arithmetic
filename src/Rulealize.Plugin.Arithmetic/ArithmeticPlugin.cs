@@ -10,7 +10,7 @@ namespace Rulealize.Plugin.Arithmetic
     /// </summary>
     /// <remarks>
     /// <para>
-    /// A good illustration of why the standard vocabulary is cut so finely. Othello uses
+    /// A good illustration of why the standard vocabulary is cut so finely. Reversi uses
     /// exactly one operation from here, to count consecutive passes. Folded into an omnibus
     /// plugin that single use would be invisible; as a separate entry in a rule set's
     /// <c>requires</c> list it says something true and useful — this rule set counts.

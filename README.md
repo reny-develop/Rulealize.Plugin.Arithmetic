@@ -13,7 +13,7 @@ Arithmetic for [Rulealize](https://github.com/reny-develop/Rulealize) rule sets.
 `math.add`, `sub`, `mul`, `div`, `mod`, `min`, `max`, `abs`. Counting the elements of a
 sequence is not here; that is `seq.count`, and it belongs to the plugin that owns sequences.
 
-Othello uses exactly one operation from this plugin — incrementing a pass counter — which
+Reversi uses exactly one operation from this plugin — incrementing a pass counter — which
 makes it the clearest illustration of why the standard vocabulary is cut so finely. Bundled
 into an omnibus plugin, that single use would be invisible. As its own line in a rule set's
 `requires` list it states something true: this rule set counts.
