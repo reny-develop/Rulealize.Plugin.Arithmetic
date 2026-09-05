@@ -24,7 +24,7 @@ namespace Rulealize.Plugin.Arithmetic
     {
         /// <inheritdoc />
         public PluginManifest Manifest { get; } =
-            new("Rulealize.Plugin.Arithmetic", new Version(1, 0, 0), "math");
+            new("Rulealize.Plugin.Arithmetic", new Version(1, 0, 1), "math");
 
         /// <inheritdoc />
         public void Register(IPluginRegistry registry)
