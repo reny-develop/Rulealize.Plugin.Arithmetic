@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    The vocabulary's own tests, where it lives. Each expression is evaluated by the Rulealize
+    runtime, restored from nuget.org, as the projection of a rule set that holds nothing else but
+    what every rule set has to have: one field, of a schema the tests carry themselves, and one
+    input, which does nothing. The plugin is handed to the runtime as an instance, so the version
+    under test is this repository's, and no other vocabulary is pinned here.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Rulealize" Version="0.12.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Rulealize.Plugin.Arithmetic\Rulealize.Plugin.Arithmetic.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -10,7 +10,7 @@ Arithmetic for [Rulealize](https://github.com/reny-develop/Rulealize) rule sets.
 | Depends on | `Rulealize.Abstraction` |
 | Specification | [doc/specification.md](doc/specification.md) |
 
-`math.add`, `sub`, `mul`, `div`, `mod`, `min`, `max`, `abs`. Counting the elements of a
+`math.add`, `sub`, `mul`, `div`, `mod`, `min`, `max`, `abs`, `round`. Counting the elements of a
 sequence is not here; that is `seq.count`, and it belongs to the plugin that owns sequences.
 
 Reversi uses exactly one operation from this plugin — incrementing a pass counter — which
@@ -28,6 +28,11 @@ number: null is an evaluation error rather than a zero, which is the mirror imag
 
 `dotnet build`. `Rulealize.Abstraction` restores from nuget.org like any other package, so
 this repository builds on its own.
+
+`dotnet test` runs the vocabulary's own tests, in `test/`: each expression evaluated by the
+Rulealize runtime as the projection of a rule set that holds nothing else. The runtime comes
+from nuget.org; the plugin under test is this repository's, handed to the runtime as an
+instance.
 
 ## License
 

@@ -4,7 +4,7 @@
 | --- | --- |
 | Identifier | `Rulealize.Plugin.Arithmetic` |
 | Namespace | `math` |
-| Version | `1.0.1` |
+| Version | `1.1.0` |
 | Reserved prefix | none |
 | Depends on | [the value model](https://github.com/reny-develop/Rulealize.Abstraction/blob/main/doc/value-model.md), and nothing else |
 | Notation | [how a plugin specification is written](https://github.com/reny-develop/Rulealize.Abstraction/blob/main/doc/specification-notation.md) |
@@ -28,6 +28,7 @@ not here.
 | `math.sub` / `math.mul` / `math.div` / `math.mod` | expression | — |
 | `math.min` / `math.max` | expression | — |
 | `math.abs` | expression | — |
+| `math.round` | expression | — (added in 1.1) |
 
 ---
 
@@ -100,8 +101,8 @@ way the fold goes. `left` and `right` leave nothing to guess.
 | `math.div` | `left / right`. **Not integer division** (`7 / 2` is `3.5`) |
 | `math.mod` | the remainder of `left` divided by `right` |
 
-`math.div` is not integer division because `Number` has no integer type. Truncation would
-need something like `math.floor`, which is not provided — see below.
+`math.div` is not integer division because `Number` has no integer type. Landing on a whole
+number, or on cents, is [`math.round`](#mathround) with the mode the rule set means.
 
 The sign of `math.mod` on negatives **follows the dividend**, as `%` does in .NET, so
 `-7 mod 3` is `-1`. A rule set needing the mathematical remainder, always non-negative,
@@ -148,6 +149,58 @@ Returns the absolute value.
 
 ---
 
+## `math.round`
+
+(added in 1.1)
+
+### Form
+
+```jsonc
+{
+  "op": "math.round",
+  "value": <expression:Number>,
+  "scale": <integer>,   // optional, static: the decimal places to keep, 0 to 28; default 0
+  "mode": "<mode>"      // required, static
+}
+```
+
+### How it evaluates
+
+`value` rounded to `scale` decimal places. Which way a value between two is taken is `mode`:
+
+| `mode` | `2.5` | `-2.5` | `2.4` | `-2.4` | Where it is the rule |
+| --- | --- | --- | --- | --- | --- |
+| `halfAwayFromZero` | `3` | `-3` | `2` | `-2` | a receipt rounded to the nearest unit, half going up |
+| `halfEven` | `2` | `-2` | `2` | `-2` | a ledger that must not drift upwards over many sums |
+| `towardZero` | `2` | `-2` | `2` | `-2` | a tax or a fee cut off, never rounded in anyone's favour |
+| `floor` | `2` | `-3` | `2` | `-3` | |
+| `ceiling` | `3` | `-2` | `3` | `-2` | |
+
+### Example
+
+The tax on an amount, cut off at the yen:
+
+```jsonc
+{ "op": "math.round", "mode": "towardZero",
+  "value": { "op": "math.mul", "of": ["$amount", 0.1] } }
+```
+
+### Why the mode has no default
+
+Each mode is the right answer somewhere, and which one a rule set means is a rule of its
+domain. A default would be a rule nobody wrote down, read by everyone who did not know it was
+there. The names say what happens to a negative number as well as a positive one, which
+"half up" and "down" do not.
+
+### Errors
+
+| Condition | When |
+| --- | --- |
+| `scale` outside 0 to 28 | build |
+| `mode` missing, or not one of the five | build |
+
+---
+
 ## Null and kinds
 
 **Every arithmetic node faults when an operand is not a `Number`**, and `Null` is no
@@ -167,14 +220,13 @@ There is no implicit conversion from `Text` either: `"1" + 1` is a fault.
 
 ## Decided
 
-- **No `math.floor` / `math.ceil` / `math.round`.** This was expected to be needed soon —
-  `math.div` gives real division, so there is no way to land on an integer, and rules doing
-  coordinate arithmetic looked like they would want one. Every rule set written since, the
-  board games included, has done without. The reason is that the questions that looked like they
-  needed division turned out to be reachable another way: chess measures distance to the
-  edge with `seq.count` over a `grid.ray` rather than by dividing coordinates. When one is
-  finally needed, the rounding mode has to be decided with it, and this is where that
-  discussion starts.
+- ~~**No `math.floor` / `math.ceil` / `math.round`.**~~ — resolved in 1.1 as one node,
+  `math.round`, with the mode required. The board games never needed it: chess measures
+  distance to the edge with `seq.count` over a `grid.ray` rather than by dividing coordinates.
+  What needed it was money — an expense claim's tax, cut off at the yen — and the condition
+  this item set, that the rounding mode be decided with the node, is met by making the mode
+  the document's to state. `floor` and `ceiling` are modes rather than nodes of their own, so
+  that every way of rounding is found in one place.
 - **No `math.pow` / `math.sqrt`.** `sqrt` returns irrationals, which decimal fixed point
   represents badly. A rule needing distances should compare squared distances.
 - **No `math.rem`** (the always-non-negative remainder). Recorded as the fix if the sign of

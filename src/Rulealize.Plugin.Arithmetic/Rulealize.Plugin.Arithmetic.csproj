@@ -14,9 +14,9 @@
 
   <PropertyGroup>
     <PackageId>Rulealize.Plugin.Arithmetic</PackageId>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
     <Authors>Reny</Authors>
-    <Description>Arithmetic over Rulealize's decimal Number values: math.add, math.sub, math.mul, math.div, math.mod, math.min, math.max and math.abs.</Description>
+    <Description>Arithmetic over Rulealize's decimal Number values: math.add, math.sub, math.mul, math.div, math.mod, math.min, math.max, math.abs and math.round.</Description>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/reny-develop/Rulealize.Plugin.Arithmetic</RepositoryUrl>
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Rulealize.Abstraction" Version="0.4.0" />
+    <PackageReference Include="Rulealize.Abstraction" Version="0.5.0" />
   </ItemGroup>
 
 </Project>

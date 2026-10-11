@@ -1,6 +1,10 @@
-﻿<Solution>
+<Solution>
   <Folder Name="/Solution Items/">
     <File Path=".editorconfig" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/test/">
+    <Project Path="test/Rulealize.Plugin.Arithmetic.Tests/Rulealize.Plugin.Arithmetic.Tests.csproj" />
   </Folder>
   <Project Path="src/Rulealize.Plugin.Arithmetic/Rulealize.Plugin.Arithmetic.csproj" />
 </Solution>

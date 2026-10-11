@@ -24,7 +24,7 @@ namespace Rulealize.Plugin.Arithmetic
     {
         /// <inheritdoc />
         public PluginManifest Manifest { get; } =
-            new("Rulealize.Plugin.Arithmetic", new Version(1, 0, 1), "math");
+            new("Rulealize.Plugin.Arithmetic", new Version(1, 1, 0), "math");
 
         /// <inheritdoc />
         public void Register(IPluginRegistry registry)
@@ -39,6 +39,7 @@ namespace Rulealize.Plugin.Arithmetic
             registry.AddExpression("div", BinaryArithmeticNode.BuildDivide);
             registry.AddExpression("mod", BinaryArithmeticNode.BuildModulo);
             registry.AddExpression("abs", AbsoluteNode.Build);
+            registry.AddExpression("round", RoundNode.Build);
         }
     }
 }
